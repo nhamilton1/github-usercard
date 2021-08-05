@@ -43,6 +43,23 @@ const followersArray = ['robDoesData',
 
 const cards = document.querySelector('.cards')
 
+axios.get('https://api.github.com/users/nhamilton1')
+  .then(res => {
+    // console.log(res)
+    // const cardImage = res.data.avatar_url
+    // const cardName = res.data.name 
+    // const cardUser = res.data.login
+    // const cardLoc = res.data.location
+    // const cardref = res.data.html_url
+    // const cardfollower = res.data.followers
+    // const cardfollowing = res.data.following
+    // const cardBio = res.data.bio
+    const gitCard = gitMaker(res.data)
+    cards.append(gitCard)
+  })
+  .catch(err => {
+    console.error(err)
+  })
 
 function gitMaker(gitCard){
 
@@ -75,14 +92,16 @@ function gitMaker(gitCard){
   cardInfo.appendChild(cardFollowing)
   cardInfo.appendChild(cardBio)
 
-  cardImg.src = gitCard.cardImage
-  cardH3.textContent = `${gitCard.cardName}`
-  cardUserName.textContent = `${gitCard.cardUser}`
-  cardLocation.textContent = `Location: ${gitCard.cardLoc}`
-  cardHref.setAttribute('href', `Profile: ${gitCard.cardref}`)
-  cardFollowers.textContent = `Followers: ${gitCard.cardfollower}`
-  cardFollowing.textContent = `Following: ${gitCard.cardfollowing}`
-  cardBio.textContent = `Bio: ${gitCard.cardBio}`
+  cardImg.src = gitCard.avatar_url
+  cardH3.textContent = `${gitCard.name}`
+  cardUserName.textContent = `${gitCard.login}`
+  cardLocation.textContent = `Location: ${gitCard.location}`
+  cardHref.setAttribute('href', `Profile: ${gitCard.html_url}`)
+  cardHref.textContent = 'Profile:'
+  cardHref.href = `${gitCard.html_url}`
+  cardFollowers.textContent = `Followers: ${gitCard.followers}`
+  cardFollowing.textContent = `Following: ${gitCard.following}`
+  cardBio.textContent = `Bio: ${gitCard.bio}`
   
 
 
@@ -116,38 +135,13 @@ function gitMaker(gitCard){
 
 
 
-axios.get('https://api.github.com/users/nhamilton1')
-  .then(res => {
-    console.log(res)
-    const cardImage = res.data.avatar_url
-    const cardName = res.data.name 
-    const cardUser = res.data.login
-    const cardLoc = res.data.location
-    const cardref = res.data.html_url
-    const cardfollower = res.data.followers
-    const cardfollowing = res.data.following
-    const cardBio = res.data.bio
-    const gitCard = gitMaker({cardImage, cardName, cardUser, cardLoc, cardref, cardfollower, cardfollowing, cardBio })
-    cards.append(gitCard)
-  })
-  .catch(err => {
-    console.error(err)
-  })
 
 
 
   followersArray.forEach(user => {
     axios.get(`https://api.github.com/users/${user}`)
     .then(res => {
-      const cardImage = res.data.avatar_url
-      const cardName = res.data.name 
-      const cardUser = res.data.login
-      const cardLoc = res.data.location
-      const cardref = res.data.html_url
-      const cardfollower = res.data.followers
-      const cardfollowing = res.data.following
-      const cardBio = res.data.bio
-      const gitCard = gitMaker({cardImage, cardName, cardUser, cardLoc, cardref, cardfollower, cardfollowing, cardBio })
+      const gitCard = gitMaker(res.data)
       cards.append(gitCard)
     })
     .catch(err => {
