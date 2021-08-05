@@ -81,24 +81,40 @@ function gitMaker(gitCard){
   cardH3.classList.add('name')
   cardUserName.classList.add('username')
 
+  
+  
+  
   card.appendChild(cardImg)
   card.appendChild(cardInfo)
   cardInfo.appendChild(cardH3)
   cardInfo.appendChild(cardUserName)
   cardInfo.appendChild(cardLocation)
+  cardProfile.textContent = `Profile: `
   cardInfo.appendChild(cardProfile)
   cardProfile.appendChild(cardHref)
   cardInfo.appendChild(cardFollowers)
   cardInfo.appendChild(cardFollowing)
   cardInfo.appendChild(cardBio)
 
+  cardHref.href = `${gitCard.html_url}` 
+  cardHref.textContent = `${gitCard.html_url}`
+
+
   cardImg.src = gitCard.avatar_url
   cardH3.textContent = `${gitCard.name}`
   cardUserName.textContent = `${gitCard.login}`
   cardLocation.textContent = `Location: ${gitCard.location}`
-  cardHref.setAttribute('href', `Profile: ${gitCard.html_url}`)
-  cardHref.textContent = 'Profile:'
-  cardHref.href = `${gitCard.html_url}`
+
+
+  
+  // cardHref.setAttribute('href', `Profile: ${gitCard.html_url}`)
+  
+  
+  
+  
+  
+
+
   cardFollowers.textContent = `Followers: ${gitCard.followers}`
   cardFollowing.textContent = `Following: ${gitCard.following}`
   cardBio.textContent = `Bio: ${gitCard.bio}`
@@ -130,12 +146,6 @@ function gitMaker(gitCard){
       </div>
     </div>
 */
-
-
-
-
-
-
 
 
   followersArray.forEach(user => {
