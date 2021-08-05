@@ -31,12 +31,17 @@ import axios from 'axios'
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['robDoesData',
+'tetondan', 
+'dustinmyers', 
+'justsml',
+'luishrd',
+'bigknell'
+];
+
 
 
 const cards = document.querySelector('.cards')
-
-// { avatar_url, name, login, location, html_url, followers, following, bio }
 
 
 function gitMaker(gitCard){
@@ -107,6 +112,10 @@ function gitMaker(gitCard){
     </div>
 */
 
+
+
+
+
 axios.get('https://api.github.com/users/nhamilton1')
   .then(res => {
     console.log(res)
@@ -126,6 +135,26 @@ axios.get('https://api.github.com/users/nhamilton1')
   })
 
 
+
+  followersArray.forEach(user => {
+    axios.get(`https://api.github.com/users/${user}`)
+    .then(res => {
+      const cardImage = res.data.avatar_url
+      const cardName = res.data.name 
+      const cardUser = res.data.login
+      const cardLoc = res.data.location
+      const cardref = res.data.html_url
+      const cardfollower = res.data.followers
+      const cardfollowing = res.data.following
+      const cardBio = res.data.bio
+      const gitCard = gitMaker({cardImage, cardName, cardUser, cardLoc, cardref, cardfollower, cardfollowing, cardBio })
+      cards.append(gitCard)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  })
+
 /*
   List of LS Instructors Github username's:
     tetondan
@@ -136,6 +165,3 @@ axios.get('https://api.github.com/users/nhamilton1')
 */
 
 
-//why is my git push not working
-//i am testing
-//trying to push again
