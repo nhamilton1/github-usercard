@@ -1,3 +1,6 @@
+import axios from 'axios'
+
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -30,6 +33,60 @@
 
 const followersArray = [];
 
+
+const cards = document.querySelector('.cards')
+
+// { avatar_url, name, login, location, html_url, followers, following, bio }
+
+
+function gitMaker(gitCard){
+
+  const card = document.createElement('div')
+  const cardImg = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const cardH3 = document.createElement('h3')
+  const cardUserName = document.createElement('p')
+  const cardLocation = document.createElement('p')
+  const cardProfile = document.createElement('p')
+  const cardHref = document.createElement('a')
+  const cardFollowers = document.createElement('p')
+  const cardFollowing = document.createElement('p')
+  const cardBio = document.createElement('p')
+
+  card.classList.add('card')
+  // cardImg.setAttribute('src', ${url})
+  cardInfo.classList.add('card-info')
+  cardH3.classList.add('name')
+  cardUserName.classList.add('username')
+
+  card.appendChild(cardImg)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(cardH3)
+  cardInfo.appendChild(cardUserName)
+  cardInfo.appendChild(cardLocation)
+  cardInfo.appendChild(cardProfile)
+  cardProfile.appendChild(cardHref)
+  cardInfo.appendChild(cardFollowers)
+  cardInfo.appendChild(cardFollowing)
+  cardInfo.appendChild(cardBio)
+
+  cardImg.src = gitCard.cardImage
+  cardH3.textContent = `${gitCard.cardName}`
+  // cardUserName.textContent = `${login}`
+  // cardLocation.textContent = `Location: ${location}`
+  // cardHref.setAttribute('href', `Profile: ${html_url}`)
+  // cardFollowers.textContent = `Followers: ${followers}`
+  // cardFollowing.textContent = `Following: ${following}`
+  // cardBio.textContent = `Bio: ${bio}`
+  
+
+
+
+  console.log(card)
+  return card
+}
+
+
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -49,6 +106,20 @@ const followersArray = [];
       </div>
     </div>
 */
+
+axios.get('https://api.github.com/users/nhamilton1')
+  .then(res => {
+    // console.log(res)
+    const cardImage = res.data.avatar_url
+    const cardName = res.data.name 
+    const cardUser = res.data.login
+    const gitCard = gitMaker({cardImage, cardName, cardUser})
+    cards.append(gitCard)
+  })
+  .catch(err => {
+    console.error(err)
+  })
+
 
 /*
   List of LS Instructors Github username's:
